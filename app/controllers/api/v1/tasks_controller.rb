@@ -1,9 +1,10 @@
 class Api::V1::TasksController < ApplicationController
     def index
         sorted_tasks = Task.sorted_tasks
-        render json: sorted_tasks, include: {
-            list: {
-                only: %i[title]
+        render json: sorted_tasks, only: %i[id content due_date completed],
+        include: {
+            user: {
+                only: %i[id username]
             }
         }
     end
