@@ -1,4 +1,13 @@
 class Api::V1::TasksController < ApplicationController
+    def index
+        sorted_tasks = Task.sorted_tasks
+        render json: sorted_tasks, include: {
+            list: {
+                only: %i[title]
+            }
+        }
+    end
+    
     def create
        task = Task.create(task_params) 
        render json: task
