@@ -7,10 +7,12 @@ class Api::V1::ListSerializer
         @list.to_json(
             include: { 
                 tasks: {
-                    only: %i[user_id content due_date completed]
-                },
-                users: {
-                    only: %i[id username]
+                    only: %i[user content due_date completed],
+                    include: {
+                        user: {
+                            only: %i[id username]
+                        }
+                    }
                 }
             },
             except: %i[updated_at]
