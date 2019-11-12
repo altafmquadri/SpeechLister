@@ -11,7 +11,11 @@ class Api::V1::TasksController < ApplicationController
     
     def create
        task = Task.create(task_params) 
-       render json: task
+       render json: task, include: {
+           user: {
+               only: %i[id username]
+           }
+       }
     end
 
     def update
