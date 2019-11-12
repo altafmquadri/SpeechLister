@@ -3,4 +3,6 @@ class List < ApplicationRecord
     has_many :users, through: :tasks
     CATEGORIES = %w[grocery todo personal] 
     validates :category, inclusion: {in: CATEGORIES}
+    validates :title, presence: true
+
 end
