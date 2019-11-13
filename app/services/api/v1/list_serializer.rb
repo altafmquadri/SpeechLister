@@ -6,7 +6,7 @@ class Api::V1::ListSerializer
     def to_serialize_json
         @list.to_json(
             include: { 
-                tasks: {
+                tasks_by_completed: {
                     only: %i[id content due_date completed],
                     include: {
                         user: {

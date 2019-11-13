@@ -5,4 +5,8 @@ class List < ApplicationRecord
     validates :category, inclusion: {in: CATEGORIES}
     validates :title, presence: true
 
+    def tasks_by_completed
+        tasks.sort_by {|task| task.completed ? 0 : 1}.reverse
+    end
+
 end
