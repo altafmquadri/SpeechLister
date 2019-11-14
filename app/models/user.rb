@@ -3,16 +3,23 @@ class User < ApplicationRecord
     has_many :lists, through: :tasks
 
     def self.tasks_by_date
+        User.all.map(&:tasks_by_date)
+    end
 
-        all_tasks = User.all.map(&:tasks).flatten
-        all_uniq_dates = all_tasks.map(&:due_date).uniq
-        
-        all_tasks.map do |task|
-            {"#{task.user.username}" => all_uniq_dates.map do |due_date|
-                {"#{due_date}" => all_tasks.select do |task|
-                    task.due_date == due_date
-                end.sort_by{|task| task.completed ? 0 : 1}.reverse}
-            end}
-        end.uniq
+    def tasks_by_date
+        uniq_dates = self.tasks.map(&:due_date).uniq
+
+        {
+            "#{self.username}" => uniq_dates.map do |date|
+                {
+                    "#{date}" => tasks.select do |task|
+                        task.due_date == date
+                    end.sort_by do |task|
+                        task.completed ? 0 : 1
+                    end.reverse
+                }
+            end
+        }
+    
     end
 end
