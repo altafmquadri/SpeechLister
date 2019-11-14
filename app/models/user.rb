@@ -16,9 +16,11 @@ class User < ApplicationRecord
         {
             "#{self.username}" => uniq_dates.map do |date|
                 {
-                    "#{date}" => tasks.select do |task|
+                    "#{date}" => self.tasks.select do |task|
                         task.due_date == date
                     end.sort_by do |task|
+                        # Array#sort_by cannot sort booleans, this is a way around it using
+                        # sort_by's basic behavior.
                         task.completed ? 0 : 1
                     end.reverse
                 }
