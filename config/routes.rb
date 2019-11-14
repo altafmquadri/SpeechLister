@@ -4,7 +4,8 @@ Rails.application.routes.draw do
       resources :tasks, only: %i[index create destroy update]
       post '/tasks/:id', to: 'tasks#complete', as: 'complete'
       resources :lists, only: %i[index create destroy]
-      resources :users, only: :index
+      resources :users, only: %i[index]
+      get '/users/tasks', to: 'users#tasks'
     end
   end
 
