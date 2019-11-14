@@ -2,9 +2,13 @@ class User < ApplicationRecord
     has_many :tasks
     has_many :lists, through: :tasks
 
-    def self.tasks_by_date
+    # Class Methods
+
+    def self.all_tasks_by_date
         User.all.map(&:tasks_by_date)
     end
+
+    # Instance Methods
 
     def tasks_by_date
         uniq_dates = self.tasks.map(&:due_date).uniq
@@ -20,6 +24,5 @@ class User < ApplicationRecord
                 }
             end
         }
-    
     end
 end
